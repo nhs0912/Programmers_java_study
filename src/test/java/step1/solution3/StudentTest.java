@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -20,16 +18,18 @@ class StudentTest {
     private Student student3;
 
     @BeforeEach
-    void setUp() {
-        student1 = new Student(firstHumanAnswer);
-        student2 = new Student(secondHumanAnswer);
-        student3 = new Student(thirdHumanAnswer);
+    void setUp(){
+        student1 = new Student(firstHumanAnswer,1);
+        student2 = new Student(secondHumanAnswer,2);
+        student3 = new Student(thirdHumanAnswer,3);
     }
 
     @Test
     @DisplayName("학생이 정답을 얼만큼 맞추었는지 TEST")
-    void compareAnswerCountTest() {
+    void compareAnswerCountTest(){
+
         int[] answers = new int[]{1, 2, 3, 4, 5};
+
 
         assertAll(
                 () -> assertThat(student1.comparedAnswerCount(answers)).isEqualTo(5),
