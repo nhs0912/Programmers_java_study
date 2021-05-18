@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Solution1_3Test {
-    private static final int[] firstHumanAnswer = new int[]{1, 2, 3, 4, 5};
-    private static final int[] secondHumanAnswer = new int[]{2, 1, 2, 3, 2, 4, 2, 5};
-    private static final int[] thirdHumanAnswer = new int[]{3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+
     private Solution1_3 s = new Solution1_3();
 
     @Test
