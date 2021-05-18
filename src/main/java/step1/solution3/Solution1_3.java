@@ -1,8 +1,33 @@
 package step1.solution3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+class Student {
+    private int[] myAnswers;
+
+    public Student(int[] myAnswers) {
+        this.myAnswers = myAnswers;
+    }
+
+    public int comparedAnswerCount(int[] correctedAnswer) {
+        int answerCount = 0;
+        int correctedAnswerSize = correctedAnswer.length;
+
+        for (int i = 0; i < correctedAnswerSize; i++) {
+            int myAnswerIndex = i % correctedAnswerSize;
+            answerCount = oneAddedCount(myAnswers[myAnswerIndex], correctedAnswer[i], answerCount);
+        }
+
+        return answerCount;
+    }
+
+    private int oneAddedCount(int myAnswer, int answer, int answerCount) {
+        return myAnswer == answer ? answerCount + 1 : answerCount;
+    }
+
+}
+
 
 public class Solution1_3 {
 
