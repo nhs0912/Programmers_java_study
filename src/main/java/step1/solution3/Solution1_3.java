@@ -15,16 +15,16 @@ class Student implements Comparable<Student> {
         this.studentNumber = studentNumber;
     }
 
-    public int comparedAnswerCount(int[] correctedAnswer) {
+    public int comparedAnswerCount(int[] correctedAnswers) {
         correctedAnswerCount = 0;
-        int correctedAnswerSize = correctedAnswer.length;
+        int myAnswersSize = myAnswers.length;
 
-        for (int i = 0; i < correctedAnswerSize; i++) {
-            int myAnswerIndex = i % correctedAnswerSize;
-            correctedAnswerCount = oneAddedCount(myAnswers[myAnswerIndex], correctedAnswer[i], correctedAnswerCount);
+        for (int i = 0; i < correctedAnswers.length; i++) {
+            int myAnswerIndex = i % myAnswersSize;
+            matchAddOneCount(myAnswers[myAnswerIndex], correctedAnswers[i]);
         }
 
-        return correctedAnswerCount;
+        return this.correctedAnswerCount;
     }
 
     public int studentNumber() {
@@ -35,10 +35,11 @@ class Student implements Comparable<Student> {
         return this.correctedAnswerCount;
     }
 
-    private int oneAddedCount(int myAnswer, int answer, int answerCount) {
-        return myAnswer == answer ? answerCount + 1 : answerCount;
+    private void matchAddOneCount(int myAnswerNumber, int correctedAnswerNumber) {
+        if (myAnswerNumber == correctedAnswerNumber) {
+            this.correctedAnswerCount++;
+        }
     }
-
 
     @Override
     public int compareTo(Student o) {
@@ -48,18 +49,10 @@ class Student implements Comparable<Student> {
 
 class Teacher {
     private List<Student> students;
-    private int[] correctedAnswer;
     private int bigCorrectedAnswerCount = 0;
 
-    public Teacher(List<Student> students, int[] correctedAnswer) {
+    public Teacher(List<Student> students) {
         this.students = students;
-        this.correctedAnswer = correctedAnswer;
-    }
-
-    public void gradeExam() {
-        for (Student student : students) {
-            student.comparedAnswerCount(correctedAnswer);
-        }
     }
 
     public int[] firstRanks() {
@@ -107,11 +100,14 @@ public class Solution1_3 {
     private Student student3 = new Student(thirdHumanAnswer, 3);
 
     public int[] solution(int[] answers) {
+        student1.comparedAnswerCount(answers);
+        student2.comparedAnswerCount(answers);
+        student3.comparedAnswerCount(answers);
 
         List<Student> students = Arrays.asList(student1, student2, student3);
 
-        Teacher teacher = new Teacher(students, answers);
-        teacher.gradeExam();
+        Teacher teacher = new Teacher(students);
+
 
         return teacher.firstRanks();
     }

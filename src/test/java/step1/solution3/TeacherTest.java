@@ -26,14 +26,18 @@ class TeacherTest {
         student1 = new Student(firstHumanAnswer, 1);
         student2 = new Student(secondHumanAnswer, 2);
         student3 = new Student(thirdHumanAnswer, 3);
+
+        student1.comparedAnswerCount(answers);
+        student2.comparedAnswerCount(answers);
+        student3.comparedAnswerCount(answers);
+
         List<Student> students = Arrays.asList(student1, student2, student3);
-        teacher = new Teacher(students, answers);
+        teacher = new Teacher(students);
     }
 
     @Test
     @DisplayName("1등을 나타내는 TEST")
     void winnerTest() {
-        teacher.gradeExam();
         int[] ranks = teacher.firstRanks();
         assertThat(ranks).containsExactly(1);
     }
