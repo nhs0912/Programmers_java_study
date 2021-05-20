@@ -15,7 +15,7 @@ class Student implements Comparable<Student> {
         this.studentNumber = studentNumber;
     }
 
-    public int comparedAnswerCount(int[] correctedAnswers) {
+    public void comparedAnswerCount(int[] correctedAnswers) {
         correctedAnswerCount = 0;
         int myAnswersSize = myAnswers.length;
 
@@ -23,8 +23,6 @@ class Student implements Comparable<Student> {
             int myAnswerIndex = i % myAnswersSize;
             matchAddOneCount(myAnswers[myAnswerIndex], correctedAnswers[i]);
         }
-
-        return this.correctedAnswerCount;
     }
 
     public int studentNumber() {
@@ -49,7 +47,6 @@ class Student implements Comparable<Student> {
 
 class Teacher {
     private List<Student> students;
-    private int bigCorrectedAnswerCount = 0;
 
     public Teacher(List<Student> students) {
         this.students = students;
@@ -68,7 +65,7 @@ class Teacher {
 
 
     private List<Student> highestScoreMember() {
-        bigCorrectedAnswerCount = bigCount();
+        int bigCorrectedAnswerCount = bigCount();
         List<Student> highestMemberList = new ArrayList<>();
         for (Student student : students) {
             if (student.correctedAnswerCount() == bigCorrectedAnswerCount) {
@@ -80,6 +77,7 @@ class Teacher {
 
 
     private int bigCount() {
+        int bigCorrectedAnswerCount = 0;
         for (Student student : students) {
             if (bigCorrectedAnswerCount < student.correctedAnswerCount()) {
                 bigCorrectedAnswerCount = student.correctedAnswerCount();

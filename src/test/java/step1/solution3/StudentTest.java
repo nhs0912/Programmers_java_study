@@ -29,12 +29,14 @@ class StudentTest {
     void compareAnswerCountTest(){
 
         int[] answers = new int[]{1, 2, 3, 4, 5};
-
-
+        student1.comparedAnswerCount(answers);
+        student2.comparedAnswerCount(answers);
+        student3.comparedAnswerCount(answers);
         assertAll(
-                () -> assertThat(student1.comparedAnswerCount(answers)).isEqualTo(5),
-                () -> assertThat(student2.comparedAnswerCount(answers)).isEqualTo(0),
-                () -> assertThat(student3.comparedAnswerCount(answers)).isEqualTo(0)
+
+                () -> assertThat(student1.correctedAnswerCount()).isEqualTo(5),
+                () -> assertThat(student2.correctedAnswerCount()).isEqualTo(0),
+                () -> assertThat(student3.correctedAnswerCount()).isEqualTo(0)
         );
     }
 
