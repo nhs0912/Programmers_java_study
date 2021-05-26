@@ -1,11 +1,17 @@
 package step1.makeprimenumber;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class PrimeNumber {
     private static final int MAX_DATA_RANGE = 2998;
-    private static final boolean[] primeNumberList = new boolean[MAX_DATA_RANGE];
+    private static boolean[] primeNumberList;
 
     public PrimeNumber() {
-        checkNotPrimeNumber();
+        if (primeNumberList == null) {
+            primeNumberList = new boolean[MAX_DATA_RANGE];
+            checkNotPrimeNumber();
+        }
     }
 
     public boolean isPrimeNumber(int number) {
@@ -33,16 +39,103 @@ class PrimeNumber {
     }
 }
 
+class Combination {
+
+    private List<ThreeNumbers> threeNumbersList;
+    private boolean[] visited;
+    private int[] numbersArr;
+
+    public Combination(int[] numbersArr) {
+        this.threeNumbersList = new ArrayList<>();
+        this.numbersArr = numbersArr;
+        visited = new boolean[numbersArr.length];
+    }
+
+    public void execute(int start, int r) {
+
+        if (r == 0) {
+            threeNumbersList.add(getNumber());
+            return;
+        } else {
+            for (int i = start; i < numbersArr.length; i++) {
+                visited[i] = true;
+                execute(i + 1, r - 1);
+                visited[i] = false;
+            }
+        }
+    }
+
+    public int numberOfCases(int n, int r) {
+        if (n == r || r == 0) {
+            return 1;
+        } else {
+            return numberOfCases(n - 1, r - 1) + numberOfCases(n - 1, r);
+        }
+    }
+
+
+    public ThreeNumbers getNumber() {
+
+        List<Integer> numbers = new ArrayList<>();
+
+        for (int i = 0; i < numbersArr.length; i++) {
+            if (visited[i] == true) {
+                numbers.add(numbersArr[i]);
+            }
+        }
+        return new ThreeNumbers(numbers);
+    }
+
+    public List<ThreeNumbers> threeNumbersList() {
+        return this.threeNumbersList;
+    }
+}
+
+class ThreeNumbers {
+    int number1;
+    int number2;
+    int number3;
+
+    public ThreeNumbers(List<Integer> numbers) {
+        this(numbers.get(0), numbers.get(1), numbers.get(2));
+    }
+
+    public ThreeNumbers(int number1, int number2, int number3) {
+        this.number1 = number1;
+        this.number2 = number2;
+        this.number3 = number3;
+    }
+
+    public int sum() {
+        return this.number1 + this.number2 + this.number3;
+    }
+}
 
 public class P73417 {
 
     public int solution(int[] nums) {
-        int answer = -1;
+        int primeNumberCount = 0;
 
-        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-        System.out.println("Hello Java");
+        int start = 0;
+        int r = 3;
+        Combination combination = new Combination(nums);
 
-        return answer;
+        combination.execute(start, r);
+
+        List<ThreeNumbers> threeNumbersList = combination.threeNumbersList();
+        PrimeNumber primeNumber = new PrimeNumber();
+
+        for (int i = 0; i < threeNumbersList.size(); i++) {
+
+            int sum = threeNumbersList.get(i).sum();
+
+            if (primeNumber.isPrimeNumber(sum)) {
+                primeNumberCount++;
+            }
+        }
+
+
+        return primeNumberCount;
     }
 
 }
