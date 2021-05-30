@@ -5,7 +5,8 @@ import java.util.List;
 
 class Game {
 
-    public Game() {
+    public Game(Users users,List<String> wordList) {
+
 
     }
 }
