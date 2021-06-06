@@ -1,9 +1,11 @@
 package step1.p73419;
 
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-class Word implements Comparator<Word>{
+class Word implements Comparable<Word> {
     private char criteria;
     private String word;
 
@@ -17,30 +19,39 @@ class Word implements Comparator<Word>{
     }
 
     @Override
-    public int compare(Word o1, Word o2) {
-        if(o1.criteria > o2.criteria){
-
-        }
-        return 0;
-
+    public int compareTo(Word o) {
+        return this.criteria > o.criteria ? 1 : 0;
     }
 }
 
-class Words{
+class Words {
     private List<Word> words;
 
-    public Words(List<Word> words){
+    public Words(List<Word> words) {
         this.words = words;
     }
 
-    public void sort(){
+    public void sort() {
+        Collections.sort(words);
+    }
 
+    public void print() {
+        words.stream().forEach((str) -> System.out.print(str + " "));
     }
 }
 
 class Solution {
-    public String[] solution(String[] strings, int n) {
+    public String[] solution(String[] inputWords, int n) {
         String[] answer = {};
+        List<Word> wordList = new ArrayList<>();
+        Arrays.stream(inputWords)
+                .forEach(str -> wordList.add(new Word(str, n)));
+
+        Words words = new Words(wordList);
+        words.print();
+        words.sort();
+        words.print();
+
         return answer;
     }
 }
