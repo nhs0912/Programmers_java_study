@@ -1,9 +1,6 @@
 package step1.p73419;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 class Word implements Comparable<Word> {
     private char criteria;
@@ -14,17 +11,38 @@ class Word implements Comparable<Word> {
         this.criteria = word.charAt(index);
     }
 
+    public String word() {
+        return this.word;
+    }
+
     public char criteria() {
         return this.criteria;
     }
 
     @Override
     public int compareTo(Word o) {
-        return this.criteria > o.criteria ? 1 : 0;
+        if(calculator(o) == 0){
+            for(int i=0; i<o.word().length();i++){
+                if(this.word.charAt(i) < o.word().charAt(i)){
+                    return -1;
+                }
+
+                if(this.word.charAt(i) > o.word().charAt(i)){
+                    return 1;
+                }
+            }
+        }
+        return calculator(o);
+    }
+
+    private int calculator(Word o){
+        return this.criteria - o.criteria;
     }
 }
 
-class Words {
+
+
+class Words implements Iterable<Word> {
     private List<Word> words;
 
     public Words(List<Word> words) {
@@ -35,31 +53,44 @@ class Words {
         Collections.sort(words);
     }
 
+    public String[] convertToStringArr() {
+        String[] resultArray = new String[words.size()];
+        int index = 0;
+        for (Word word : this) {
+            resultArray[index++] = word.word();
+        }
+        return resultArray;
+    }
+
     public void print() {
-        words.stream().forEach((str) -> System.out.print(str + " "));
+        words.stream().forEach((str) -> System.out.print(str.word() + " " + str.criteria() + " "));
+        System.out.println();
+    }
+
+    @Override
+    public Iterator<Word> iterator() {
+        return words.iterator();
     }
 }
 
 class Solution {
     public String[] solution(String[] inputWords, int n) {
-        String[] answer = {};
+
         List<Word> wordList = new ArrayList<>();
         Arrays.stream(inputWords)
                 .forEach(str -> wordList.add(new Word(str, n)));
 
         Words words = new Words(wordList);
-        words.print();
         words.sort();
-        words.print();
+        return words.convertToStringArr();
 
-        return answer;
     }
 }
 
 public class P73419 {
 
     public static void main(String[] args) {
-        String[] inputWords = new String[]{"sun", "bed", "car"};
+        String[] inputWords = new String[]{"bed", "sun", "car"};
         int n = 1;
         Solution solution = new Solution();
         solution.solution(inputWords, n);
