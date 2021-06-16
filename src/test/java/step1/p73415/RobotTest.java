@@ -56,17 +56,11 @@ class RobotTest {
     @Test
     @DisplayName("차가 몇번 움직였는지 테스트 ")
     void moveCountTest() {
-        Stage stage = new Stage();
-        Robot robot = new Robot(stage);
-        robot.move(Direction.D);
-        robot.move(Direction.D);
-        robot.move(Direction.D);
-        robot.move(Direction.D);
-        robot.move(Direction.D);
-        robot.move(Direction.D);
-        robot.move(Direction.D);
+        //LULLLLLLU
+        String dirs = "LULLLLLLU";
+        int result = new Solution().solution(dirs);
 
-        assertThat(robot.moveCount()).isEqualTo(5);
+        assertThat(result).isEqualTo(7);
     }
 
 
